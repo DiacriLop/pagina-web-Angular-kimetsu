@@ -1,0 +1,319 @@
+<div class="app-container">
+  <!-- Dynamic Hero Banner -->
+  <header class="app-header">
+    <div class="header-overlay"></div>
+    <div class="header-content">
+      <div class="jp-sub-title">鬼滅の刃</div>
+      <h1 class="main-title">KIMETSU NO YAIBA</h1>
+      <p class="section-desc">Directorio de Pilares (Hashiras) y Lunas Demoníacas (Kizuki)</p>
+    </div>
+  </header>
+
+  <!-- Filter & Dashboard Section -->
+  <section class="dashboard-controls">
+    <!-- Row 1: Search and Main Role Filters -->
+    <div class="controls-row-primary">
+      <div class="search-box-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+        </svg>
+        <input 
+          type="text" 
+          placeholder="Buscar cazador, demonio, aliento o técnica..." 
+          class="search-input"
+          [value]="searchQuery()"
+          (input)="onSearchChange($event)"
+        />
+        @if (searchQuery()) {
+          <button class="clear-search" (click)="searchQuery.set('')">✕</button>
+        }
+      </div>
+
+      <div class="role-tabs">
+        <button 
+          class="role-tab" 
+          [class.active]="roleFilter() === 'todos'" 
+          (click)="setRole('todos')">
+          Todos
+        </button>
+        <button 
+          class="role-tab pilar-tab" 
+          [class.active]="roleFilter() === 'pilar'" 
+          (click)="setRole('pilar')">
+          <span class="dot"></span> Pilares
+        </button>
+        <button 
+          class="role-tab luna-tab" 
+          [class.active]="roleFilter() === 'luna'" 
+          (click)="setRole('luna')">
+          <span class="dot"></span> Lunas
+        </button>
+      </div>
+    </div>
+
+    <!-- Row 2: Secondary Filters (Status & Elements) -->
+    <div class="controls-row-secondary">
+      <!-- Status Filters -->
+      <div class="filter-group">
+        <span class="filter-label">Estado Vital:</span>
+        <div class="status-chips">
+          <button 
+            class="status-chip" 
+            [class.active]="statusFilter() === 'todos'" 
+            (click)="setStatus('todos')">
+            Todos
+          </button>
+          <button 
+            class="status-chip active-chip" 
+            [class.active]="statusFilter() === 'Activo'" 
+            (click)="setStatus('Activo')">
+            Activo
+          </button>
+          <button 
+            class="status-chip deceased-chip" 
+            [class.active]="statusFilter() === 'Fallecido'" 
+            (click)="setStatus('Fallecido')">
+            Fallecido
+          </button>
+          <button 
+            class="status-chip retired-chip" 
+            [class.active]="statusFilter() === 'Retirado'" 
+            (click)="setStatus('Retirado')">
+            Retirado
+          </button>
+        </div>
+      </div>
+
+      <!-- Reset Button -->
+      @if (searchQuery() || roleFilter() !== 'todos' || statusFilter() !== 'todos' || elementFilter() !== 'todos') {
+        <button class="reset-button" (click)="resetFilters()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="reset-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+          Limpiar Filtros
+        </button>
+      }
+    </div>
+
+    <!-- Row 3: Horizontal Element Chip Scroller -->
+    <div class="elements-scroller-wrapper">
+      <span class="scroller-label">Elemento / Estilo:</span>
+      <div class="elements-chip-scroller">
+        @for (elem of elementsList(); track elem) {
+          <button 
+            class="element-chip" 
+            [class.active]="elementFilter() === elem" 
+            (click)="setElement(elem)">
+            {{ elem === 'todos' ? 'Todos' : elem }}
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Characters Grid Section -->
+  <main class="grid-section">
+    @if (filteredCharacters().length > 0) {
+      <div class="characters-grid">
+        @for (char of filteredCharacters(); track char.id) {
+          <article 
+            class="character-card" 
+            [class.is-pilar]="char.role === 'pilar'"
+            [class.is-luna]="char.role === 'luna'"
+            [style.--aura-color]="char.themeColor"
+            (click)="selectCharacter(char)">
+            
+            <!-- Glow Aura Effect -->
+            <div class="aura-glow"></div>
+            
+            <!-- Vertical Japanese Kanji background -->
+            <div class="kanji-bg">{{ char.japaneseName }}</div>
+
+            <!-- Card Header Badge -->
+            <div class="card-badge">
+              @if (char.role === 'pilar') {
+                <span class="badge badge-pilar">PILAR</span>
+              } @else {
+                <span class="badge badge-luna">LUNA</span>
+              }
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+              <span class="element-tag" [style.background-color]="char.themeColor + '1a'" [style.color]="char.themeColor">
+                {{ char.element }}
+              </span>
+              <h2 class="char-name">{{ char.name }}</h2>
+              <p class="char-subrole">{{ char.subRole }}</p>
+              <p class="char-ability-preview">{{ char.abilityName }}</p>
+            </div>
+
+            <!-- Card Footer (Basic Stats Mini-Preview) -->
+            <div class="card-footer">
+              <div class="mini-stat">
+                <span class="stat-lbl">Fuerza</span>
+                <div class="mini-bar">
+                  <div class="mini-bar-fill" [style.width]="char.stats.fuerza + '%'" [style.background-color]="char.themeColor"></div>
+                </div>
+              </div>
+              <div class="mini-stat">
+                <span class="stat-lbl">Velocidad</span>
+                <div class="mini-bar">
+                  <div class="mini-bar-fill" [style.width]="char.stats.velocidad + '%'" [style.background-color]="char.themeColor"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Click Indicator -->
+            <div class="card-action-overlay">
+              <span class="action-text">Ver Perfil Completo</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="action-arrow">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <!-- Empty State -->
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="empty-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.318M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+        </svg>
+        <h3>No se encontraron personajes</h3>
+        <p>Intenta ajustar tus criterios de búsqueda o limpia los filtros activos.</p>
+        <button class="empty-reset-btn" (click)="resetFilters()">Limpiar todos los filtros</button>
+      </div>
+    }
+  </main>
+
+  <!-- Sliding Character Detail Drawer -->
+  <div class="drawer-overlay" [class.open]="selectedCharacter() !== null" (click)="closeDrawer()"></div>
+  
+  @if (selectedCharacter(); as char) {
+    <aside class="detail-drawer" [class.open]="selectedCharacter() !== null" [style.--aura-color]="char.themeColor">
+      <!-- Drawer Header -->
+      <header class="drawer-header">
+        <button class="close-drawer-btn" (click)="closeDrawer()" aria-label="Cerrar detalles">✕</button>
+        <div class="drawer-header-visual">
+          <div class="drawer-kanji-watermark">{{ char.japaneseName }}</div>
+          <div class="drawer-header-content">
+            <span class="drawer-badge" [class.badge-pilar]="char.role === 'pilar'" [class.badge-luna]="char.role === 'luna'">
+              {{ char.role === 'pilar' ? 'ORGANIZACIÓN DE CAZADORES' : 'DOCE LUNAS DEMONÍACAS' }}
+            </span>
+            <h2 class="drawer-char-name">{{ char.name }}</h2>
+            <div class="drawer-char-jp-row">
+              <span class="drawer-char-jp">{{ char.japaneseName }}</span>
+              <span class="drawer-divider">•</span>
+              <span class="drawer-char-subrole">{{ char.subRole }}</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Drawer Body Content -->
+      <div class="drawer-body">
+        <!-- Quote Panel -->
+        <div class="drawer-quote-card">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="quote-icon">
+            <path d="M11.19 12.19c0 2.76-2.24 5-5 5s-5-2.24-5-5c0-4.04 3.06-7.39 7-7.92V6.3c-2.42.47-4.24 2.58-4.24 5.13 0 .15.02.3.05.45.8-.46 1.73-.69 2.69-.69 2.76 0 5 2.24 5 5zm11 0c0 2.76-2.24 5-5 5s-5-2.24-5-5c0-4.04 3.06-7.39 7-7.92V6.3c-2.42.47-4.24 2.58-4.24 5.13 0 .15.02.3.05.45.8-.46 1.73-.69 2.69-.69 2.76 0 5 2.24 5 5z"/>
+          </svg>
+          <blockquote class="character-quote">
+            "{{ char.quote }}"
+          </blockquote>
+        </div>
+
+        <!-- Quick Info Meta Grid -->
+        <section class="drawer-meta-grid">
+          <div class="meta-item">
+            <span class="meta-lbl">Habilidad Principal</span>
+            <span class="meta-val highlight-val">{{ char.abilityName }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-lbl">Tipo de Técnica</span>
+            <span class="meta-val">{{ char.abilityType }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-lbl">Elemento / Esencia</span>
+            <span class="meta-val" [style.color]="char.themeColor">{{ char.element }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-lbl">Estado Vital</span>
+            <span class="meta-val status-badge-val" [class.is-activo]="char.status === 'Activo'" [class.is-fallecido]="char.status === 'Fallecido'" [class.is-retirado]="char.status === 'Retirado'">
+              <span class="status-dot"></span> {{ char.status }}
+            </span>
+          </div>
+          <div class="meta-item full-width">
+            <span class="meta-lbl">Actor de Voz (Seiyū)</span>
+            <span class="meta-val voice-actor">🎙️ {{ char.seiyuu }}</span>
+          </div>
+        </section>
+
+        <!-- Biography / Story -->
+        <section class="drawer-section">
+          <h3 class="section-title">Historia y Perfil</h3>
+          <p class="character-lore">{{ char.description }}</p>
+        </section>
+
+        <!-- Combat Stats Meter -->
+        <section class="drawer-section">
+          <h3 class="section-title">Estadísticas de Combate</h3>
+          <div class="combat-stats-container">
+            <!-- Stat item: Fuerza -->
+            <div class="stat-row">
+              <div class="stat-header">
+                <span class="stat-name">Fuerza Física</span>
+                <span class="stat-number">{{ char.stats.fuerza }}/100</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" [style.width]="char.stats.fuerza + '%'" [style.background]="char.themeColor"></div>
+              </div>
+            </div>
+            <!-- Stat item: Velocidad -->
+            <div class="stat-row">
+              <div class="stat-header">
+                <span class="stat-name">Velocidad y Agilidad</span>
+                <span class="stat-number">{{ char.stats.velocidad }}/100</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" [style.width]="char.stats.velocidad + '%'" [style.background]="char.themeColor"></div>
+              </div>
+            </div>
+            <!-- Stat item: Técnica -->
+            <div class="stat-row">
+              <div class="stat-header">
+                <span class="stat-name">Técnica y Esgrima</span>
+                <span class="stat-number">{{ char.stats.tecnica }}/100</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" [style.width]="char.stats.tecnica + '%'" [style.background]="char.themeColor"></div>
+              </div>
+            </div>
+            <!-- Stat item: Resistencia -->
+            <div class="stat-row">
+              <div class="stat-header">
+                <span class="stat-name">Resistencia y Vitalidad</span>
+                <span class="stat-number">{{ char.stats.resistencia }}/100</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" [style.width]="char.stats.resistencia + '%'" [style.background]="char.themeColor"></div>
+              </div>
+            </div>
+            <!-- Stat item: Inteligencia -->
+            <div class="stat-row">
+              <div class="stat-header">
+                <span class="stat-name">Táctica e Inteligencia</span>
+                <span class="stat-number">{{ char.stats.inteligencia }}/100</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" [style.width]="char.stats.inteligencia + '%'" [style.background]="char.themeColor"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </aside>
+  }
+</div>
+
+<router-outlet />

@@ -1,0 +1,1128 @@
+/* SCSS for Kimetsu no Yaiba Directory */
+
+.app-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   1. Dynamic Hero Banner
+   ========================================================================== */
+.app-header {
+  position: relative;
+  padding: 3.5rem 2rem;
+  border-radius: 20px;
+  background: radial-gradient(circle at top right, rgba(229, 184, 66, 0.08), transparent 50%),
+              radial-gradient(circle at bottom left, rgba(0, 195, 255, 0.06), transparent 50%),
+              linear-gradient(135deg, #0d0f16, #0e121d);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  .header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 16px 16px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .jp-sub-title {
+    font-family: var(--font-japanese);
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    letter-spacing: 0.8rem;
+    margin-right: -0.8rem; /* offset letter-spacing */
+    text-shadow: 0 0 10px rgba(229, 184, 66, 0.3);
+    margin-bottom: 0.25rem;
+  }
+
+  .main-title {
+    font-size: clamp(2rem, 5.5vw, 3.75rem);
+    font-weight: 850;
+    letter-spacing: 0.15rem;
+    line-height: 1.1;
+    background: linear-gradient(to right, #f3f4f6, #9ca3af);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0.5rem 0;
+    
+    /* Elegant split neonic shadow representing Hashira vs Demons */
+    text-shadow: -2px -2px 0px rgba(0, 195, 255, 0.2), 
+                  2px 2px 0px rgba(255, 0, 85, 0.2);
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 400;
+    max-width: 500px;
+    letter-spacing: 0.05rem;
+  }
+}
+
+/* ==========================================================================
+   2. Dashboard Controls
+   ========================================================================== */
+.dashboard-controls {
+  background: rgba(13, 16, 26, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  /* Primary Row: Search and main Role tabs */
+  .controls-row-primary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search-box-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 290px;
+    max-width: 600px;
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--text-dim);
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.85rem 2.75rem 0.85rem 2.75rem;
+      background: rgba(8, 9, 12, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-family: var(--font-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s ease;
+
+      &::placeholder {
+        color: var(--text-dim);
+      }
+
+      &:focus {
+        border-color: rgba(0, 195, 255, 0.4);
+        box-shadow: 0 0 15px rgba(0, 195, 255, 0.15);
+        background: #08090c;
+        
+        & + .search-icon {
+          color: rgba(0, 195, 255, 0.8);
+        }
+      }
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--text-main);
+      }
+    }
+  }
+
+  .role-tabs {
+    display: flex;
+    background: #08090c;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 0.25rem;
+    gap: 0.25rem;
+
+    .role-tab {
+      background: transparent;
+      border: 0;
+      padding: 0.65rem 1.25rem;
+      border-radius: 9px;
+      color: var(--text-muted);
+      font-family: var(--font-primary);
+      font-weight: 550;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.6;
+      }
+
+      &:hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      &.active {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      &.pilar-tab.active {
+        background: rgba(0, 195, 255, 0.15);
+        color: #00e1ff;
+        border: 1px solid rgba(0, 195, 255, 0.2);
+        box-shadow: 0 0 15px rgba(0, 195, 255, 0.1);
+      }
+
+      &.luna-tab.active {
+        background: rgba(255, 0, 85, 0.15);
+        color: #ff0055;
+        border: 1px solid rgba(255, 0, 85, 0.2);
+        box-shadow: 0 0 15px rgba(255, 0, 85, 0.1);
+      }
+    }
+  }
+
+  /* Secondary Row: Status Filters & Reset */
+  .controls-row-secondary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.02rem;
+  }
+
+  .status-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .status-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      padding: 0.45rem 0.95rem;
+      border-radius: 20px;
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-main);
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: var(--text-main);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      &.active-chip.active {
+        background: rgba(92, 214, 153, 0.12);
+        color: #5cd699;
+        border-color: rgba(92, 214, 153, 0.3);
+      }
+
+      &.deceased-chip.active {
+        background: rgba(239, 68, 68, 0.12);
+        color: #f87171;
+        border-color: rgba(239, 68, 68, 0.3);
+      }
+
+      &.retired-chip.active {
+        background: rgba(229, 184, 66, 0.12);
+        color: #e5b842;
+        border-color: rgba(229, 184, 66, 0.3);
+      }
+    }
+  }
+
+  .reset-button {
+    background: transparent;
+    border: 1px dashed rgba(239, 68, 68, 0.25);
+    color: #f87171;
+    padding: 0.45rem 1rem;
+    border-radius: 20px;
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    font-weight: 550;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.25s ease;
+
+    .reset-icon {
+      width: 0.95rem;
+      height: 0.95rem;
+      transition: transform 0.4s ease;
+    }
+
+    &:hover {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.5);
+      
+      .reset-icon {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  /* Row 3: Horizontal Element Chip Scroller */
+  .elements-scroller-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 0.75rem;
+  }
+
+  .scroller-label {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .elements-chip-scroller {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.1rem 0.2rem 0.5rem;
+    flex: 1;
+    
+    /* Sleek custom miniature scrollbar just for the element bar */
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 2px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .element-chip {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-main);
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-main);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   3. Characters Grid Section
+   ========================================================================== */
+.grid-section {
+  width: 100%;
+}
+
+.characters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+   4. Character Cards (Themed Glowing Cards)
+   ========================================================================== */
+.character-card {
+  --glow-opacity: 0.02;
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Hover energy aura glow behind the card */
+  .aura-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--aura-color) 12%, transparent) 0%, transparent 65%);
+    pointer-events: none;
+    opacity: 0.3;
+    transition: all 0.5s ease;
+  }
+
+  /* Decorative vertical Japanese calligraphy background */
+  .kanji-bg {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    writing-mode: vertical-rl;
+    font-family: var(--font-japanese);
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--aura-color);
+    opacity: 0.035;
+    pointer-events: none;
+    user-select: none;
+    transition: all 0.4s ease;
+  }
+
+  /* Insignia / Badge style */
+  .card-badge {
+    align-self: flex-start;
+    
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .badge-pilar {
+      background: rgba(0, 195, 255, 0.08);
+      color: #00c3ff;
+      border: 1px solid rgba(0, 195, 255, 0.15);
+    }
+
+    .badge-luna {
+      background: rgba(255, 0, 85, 0.08);
+      color: #ff0055;
+      border: 1px solid rgba(255, 0, 85, 0.15);
+    }
+  }
+
+  /* Card Body content */
+  .card-body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    flex-grow: 1;
+
+    .element-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 0.25rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .char-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: 0.01rem;
+      transition: color 0.3s ease;
+    }
+
+    .char-subrole {
+      font-size: 0.85rem;
+      color: var(--color-gold);
+      font-weight: 550;
+      letter-spacing: 0.02rem;
+    }
+
+    .char-ability-preview {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      line-height: 1.4;
+    }
+  }
+
+  /* Card Footer (Mini skill preview) */
+  .card-footer {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .mini-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .stat-lbl {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .mini-bar {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 2px;
+      overflow: hidden;
+
+      .mini-bar-fill {
+        height: 100%;
+        border-radius: 2px;
+        transition: width 0.8s ease-in-out;
+      }
+    }
+  }
+
+  /* Slide-up overlay inviting the user to click */
+  .card-action-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(8, 9, 12, 0.98), rgba(8, 9, 12, 0.9));
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    .action-text {
+      font-size: 0.825rem;
+      font-weight: 600;
+      letter-spacing: 0.05rem;
+      color: var(--text-main);
+    }
+
+    .action-arrow {
+      width: 1rem;
+      height: 1rem;
+      color: var(--aura-color);
+      transition: transform 0.3s ease;
+    }
+  }
+
+  /* Card Elevate and glowing hover styles */
+  &:hover {
+    transform: translateY(-6px);
+    border-color: color-mix(in srgb, var(--aura-color) 40%, transparent);
+    box-shadow: 0 16px 40px -10px color-mix(in srgb, var(--aura-color) 18%, transparent),
+                0 0 20px -2px color-mix(in srgb, var(--aura-color) 10%, transparent);
+
+    .aura-glow {
+      opacity: 0.65;
+    }
+
+    .kanji-bg {
+      opacity: 0.075;
+      transform: scale(1.05) translateY(-2px);
+    }
+
+    .char-name {
+      color: #ffffff;
+      text-shadow: 0 0 8px color-mix(in srgb, var(--aura-color) 20%, transparent);
+    }
+
+    .element-tag {
+      background-color: color-mix(in srgb, var(--aura-color) 22%, transparent);
+    }
+
+    .card-action-overlay {
+      transform: translateY(0);
+      opacity: 1;
+
+      .action-arrow {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. Empty State
+   ========================================================================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: rgba(18, 20, 28, 0.4);
+  border: 1px dashed rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  text-align: center;
+  gap: 0.75rem;
+
+  .empty-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 400px;
+    line-height: 1.5;
+  }
+
+  .empty-reset-btn {
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    font-weight: 550;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+/* ==========================================================================
+   6. Sliding Character Detail Drawer
+   ========================================================================== */
+/* Drawer Overlay background blur */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 4, 7, 0.6);
+  backdrop-filter: blur(0px);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.open {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    pointer-events: auto;
+  }
+}
+
+/* The Drawer Sidepanel itself */
+.detail-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 500px;
+  height: 100vh;
+  background: #0b0d13;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -15px 0 45px rgba(0, 0, 0, 0.7),
+              -2px 0 15px color-mix(in srgb, var(--aura-color) 12%, transparent);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  /* Drawer Header */
+  .drawer-header {
+    position: relative;
+    padding: 3rem 2rem 2rem;
+    background: linear-gradient(135deg, rgba(8, 9, 12, 0.95), rgba(18, 20, 28, 0.85));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+
+    .close-drawer-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      z-index: 10;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: rgba(255, 0, 85, 0.15);
+        color: #ff3b7e;
+        border-color: rgba(255, 0, 85, 0.3);
+      }
+    }
+
+    .drawer-header-visual {
+      position: relative;
+    }
+
+    .drawer-kanji-watermark {
+      position: absolute;
+      top: 50%;
+      right: -1rem;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      font-family: var(--font-japanese);
+      font-size: 5.5rem;
+      font-weight: 900;
+      color: var(--aura-color);
+      opacity: 0.06;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .drawer-header-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .drawer-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      display: inline-block;
+      
+      &.badge-pilar {
+        background: rgba(0, 195, 255, 0.08);
+        color: #00c3ff;
+        border: 1px solid rgba(0, 195, 255, 0.15);
+      }
+
+      &.badge-luna {
+        background: rgba(255, 0, 85, 0.08);
+        color: #ff0055;
+        border: 1px solid rgba(255, 0, 85, 0.15);
+      }
+    }
+
+    .drawer-char-name {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .drawer-char-jp-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .drawer-char-jp {
+      font-family: var(--font-japanese);
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .drawer-divider {
+      color: var(--text-dim);
+      opacity: 0.5;
+    }
+
+    .drawer-char-subrole {
+      font-size: 0.95rem;
+      color: var(--color-gold);
+      font-weight: 600;
+    }
+  }
+
+  /* Drawer Scrollable Body */
+  .drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  /* Quote Card Styling */
+  .drawer-quote-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 4px solid var(--aura-color);
+    padding: 1.25rem 1.5rem 1.25rem 2.25rem;
+    border-radius: 0 12px 12px 0;
+    overflow: hidden;
+
+    .quote-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 0.75rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--aura-color);
+      opacity: 0.18;
+    }
+
+    .character-quote {
+      font-family: var(--font-primary);
+      font-size: 0.975rem;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+  }
+
+  /* Metadata Info Grid */
+  .drawer-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 1.25rem;
+    border-radius: 12px;
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      &.full-width {
+        grid-column: span 2;
+        border-top: 1px dashed rgba(255, 255, 255, 0.05);
+        padding-top: 0.75rem;
+      }
+    }
+
+    .meta-lbl {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03rem;
+    }
+
+    .meta-val {
+      font-size: 0.925rem;
+      font-weight: 550;
+      color: var(--text-main);
+
+      &.highlight-val {
+        color: #ffffff;
+        font-weight: 650;
+      }
+
+      &.voice-actor {
+        font-size: 0.95rem;
+      }
+    }
+
+    .status-badge-val {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      &.is-activo .status-dot {
+        background: #5cd699;
+        box-shadow: 0 0 8px #5cd699;
+      }
+      &.is-fallecido .status-dot {
+        background: #ef4444;
+        box-shadow: 0 0 8px #ef4444;
+      }
+      &.is-retirado .status-dot {
+        background: #e5b842;
+        box-shadow: 0 0 8px #e5b842;
+      }
+    }
+  }
+
+  /* General Drawer Subsection */
+  .drawer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 650;
+      letter-spacing: 0.03rem;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 0.5rem;
+    }
+
+    .character-lore {
+      font-size: 0.925rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      text-align: justify;
+    }
+  }
+
+  /* Combat Stats meter container */
+  .combat-stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+
+    .stat-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-name {
+      font-size: 0.85rem;
+      font-weight: 550;
+      color: var(--text-main);
+    }
+
+    .stat-number {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .stat-track {
+      width: 100%;
+      height: 8px;
+      background: #191c28;
+      border-radius: 4px;
+      overflow: hidden;
+
+      .stat-fill {
+        height: 100%;
+        border-radius: 4px;
+        /* Custom smooth cubic load-in transition for the bars */
+        animation: slideInBar 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        width: 0; /* Animated dynamically from inline styles */
+      }
+    }
+  }
+}
+
+/* Bar load animation */
+@keyframes slideInBar {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   7. Responsive Adaptations
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .app-container {
+    padding: 1rem 1rem 3rem;
+    gap: 1.75rem;
+  }
+
+  .app-header {
+    padding: 2.25rem 1rem;
+    
+    .jp-sub-title {
+      letter-spacing: 0.4rem;
+      margin-right: -0.4rem;
+    }
+  }
+
+  .dashboard-controls {
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+
+    .controls-row-primary {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .search-box-wrapper {
+      max-width: none;
+    }
+
+    .role-tabs {
+      justify-content: stretch;
+      
+      .role-tab {
+        flex: 1;
+        justify-content: center;
+        padding: 0.6rem 0.5rem;
+      }
+    }
+
+    .controls-row-secondary {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .status-chips {
+      .status-chip {
+        flex: 1;
+        text-align: center;
+        padding: 0.4rem 0.6rem;
+      }
+    }
+
+    .reset-button {
+      justify-content: center;
+      width: 100%;
+    }
+
+    .elements-scroller-wrapper {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.4rem;
+    }
+  }
+
+  .characters-grid {
+    grid-template-columns: 1fr; /* single column on narrow screens */
+    gap: 1.25rem;
+  }
+
+  .detail-drawer {
+    max-width: 100%; /* full width on mobile devices */
+    border-left: 0;
+  }
+}
