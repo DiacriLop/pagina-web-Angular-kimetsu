@@ -3,44 +3,38 @@ name: Deploy to Siteground - HallOfDoom
 on:
   push:
     branches:
-      - develop
+      - dev
   pull_request:
     branches:
-      - develop
+      - dev
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Clonar el repositorio en la máquina del runner
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Configurar Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
 
-      # Configurar Angular CLI
       - name: Setup Angular CLI
         run: npm install -g @angular/cli
 
-      # Instalar dependencias
       - name: Install Dependencies
         run: npm install
 
-      # Build del Proyecto Angular
       - name: Build Angular Project
         run: ng build
 
-      # Deploy
       - name: Deploy to SiteGround using rsync
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
-
+          
           rsync -avz --delete \
           -e "ssh -i private_key -o StrictHostKeyChecking=no -p $PORT"  \
           dist/directorio-kimetsu/browser/ $USER@$HOST:$REMOTE_PATH
