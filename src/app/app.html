@@ -3,8 +3,8 @@
   <header class="app-header">
     <div class="header-overlay"></div>
     <div class="header-content">
-      <div class="jp-sub-title">鬼滅の刃</div>
-      <h1 class="main-title">KIMETSU NO YAIBA</h1>
+      <div class="jp-sub-title">鬼滅の刃%</div>
+      <h1 class="main-title">HOLA CAMBIOS</h1>
       <p class="section-desc">Directorio de Pilares (Hashiras) y Lunas Demoníacas (Kizuki)</p>
     </div>
   </header>
@@ -17,9 +17,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
           <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
         </svg>
-        <input 
-          type="text" 
-          placeholder="Buscar cazador, demonio, aliento o técnica..." 
+        <input
+          type="text"
+          placeholder="Buscar cazador, demonio, aliento o técnica..."
           class="search-input"
           [value]="searchQuery()"
           (input)="onSearchChange($event)"
@@ -30,21 +30,21 @@
       </div>
 
       <div class="role-tabs">
-        <button 
-          class="role-tab" 
-          [class.active]="roleFilter() === 'todos'" 
+        <button
+          class="role-tab"
+          [class.active]="roleFilter() === 'todos'"
           (click)="setRole('todos')">
           Todos
         </button>
-        <button 
-          class="role-tab pilar-tab" 
-          [class.active]="roleFilter() === 'pilar'" 
+        <button
+          class="role-tab pilar-tab"
+          [class.active]="roleFilter() === 'pilar'"
           (click)="setRole('pilar')">
           <span class="dot"></span> Pilares
         </button>
-        <button 
-          class="role-tab luna-tab" 
-          [class.active]="roleFilter() === 'luna'" 
+        <button
+          class="role-tab luna-tab"
+          [class.active]="roleFilter() === 'luna'"
           (click)="setRole('luna')">
           <span class="dot"></span> Lunas
         </button>
@@ -57,27 +57,27 @@
       <div class="filter-group">
         <span class="filter-label">Estado Vital:</span>
         <div class="status-chips">
-          <button 
-            class="status-chip" 
-            [class.active]="statusFilter() === 'todos'" 
+          <button
+            class="status-chip"
+            [class.active]="statusFilter() === 'todos'"
             (click)="setStatus('todos')">
             Todos
           </button>
-          <button 
-            class="status-chip active-chip" 
-            [class.active]="statusFilter() === 'Activo'" 
+          <button
+            class="status-chip active-chip"
+            [class.active]="statusFilter() === 'Activo'"
             (click)="setStatus('Activo')">
             Activo
           </button>
-          <button 
-            class="status-chip deceased-chip" 
-            [class.active]="statusFilter() === 'Fallecido'" 
+          <button
+            class="status-chip deceased-chip"
+            [class.active]="statusFilter() === 'Fallecido'"
             (click)="setStatus('Fallecido')">
             Fallecido
           </button>
-          <button 
-            class="status-chip retired-chip" 
-            [class.active]="statusFilter() === 'Retirado'" 
+          <button
+            class="status-chip retired-chip"
+            [class.active]="statusFilter() === 'Retirado'"
             (click)="setStatus('Retirado')">
             Retirado
           </button>
@@ -100,9 +100,9 @@
       <span class="scroller-label">Elemento / Estilo:</span>
       <div class="elements-chip-scroller">
         @for (elem of elementsList(); track elem) {
-          <button 
-            class="element-chip" 
-            [class.active]="elementFilter() === elem" 
+          <button
+            class="element-chip"
+            [class.active]="elementFilter() === elem"
             (click)="setElement(elem)">
             {{ elem === 'todos' ? 'Todos' : elem }}
           </button>
@@ -116,16 +116,16 @@
     @if (filteredCharacters().length > 0) {
       <div class="characters-grid">
         @for (char of filteredCharacters(); track char.id) {
-          <article 
-            class="character-card" 
+          <article
+            class="character-card"
             [class.is-pilar]="char.role === 'pilar'"
             [class.is-luna]="char.role === 'luna'"
             [style.--aura-color]="char.themeColor"
             (click)="selectCharacter(char)">
-            
+
             <!-- Glow Aura Effect -->
             <div class="aura-glow"></div>
-            
+
             <!-- Vertical Japanese Kanji background -->
             <div class="kanji-bg">{{ char.japaneseName }}</div>
 
@@ -163,7 +163,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Click Indicator -->
             <div class="card-action-overlay">
               <span class="action-text">Ver Perfil Completo</span>
@@ -189,7 +189,7 @@
 
   <!-- Sliding Character Detail Drawer -->
   <div class="drawer-overlay" [class.open]="selectedCharacter() !== null" (click)="closeDrawer()"></div>
-  
+
   @if (selectedCharacter(); as char) {
     <aside class="detail-drawer" [class.open]="selectedCharacter() !== null" [style.--aura-color]="char.themeColor">
       <!-- Drawer Header -->

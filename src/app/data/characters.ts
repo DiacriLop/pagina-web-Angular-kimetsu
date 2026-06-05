@@ -32,7 +32,7 @@ export const CHARACTERS: Character[] = [
     subRole: 'Pilar del Agua',
     abilityType: 'Respiración',
     abilityName: 'Respiración del Agua',
-    element: 'Agua',
+    element: 'Roca',
     status: 'Activo',
     seiyuu: 'Takahiro Sakurai',
     description: 'El primer pilar que conoció Tanjiro. Es un hombre de pocas palabras, con una actitud fría y reservada, pero posee un profundo sentido de la justicia y compasión. Desarrolló la Undécima Postura de la Respiración del Agua: Calma.',
@@ -88,7 +88,7 @@ export const CHARACTERS: Character[] = [
       resistencia: 60,
       inteligencia: 98
     },
-    themeColor: '#be4dff'
+    themeColor: '#382742'
   },
   {
     id: 'tengen-uzui',
@@ -186,7 +186,7 @@ export const CHARACTERS: Character[] = [
     subRole: 'Pilar del Viento',
     abilityType: 'Respiración',
     abilityName: 'Respiración del Viento',
-    element: 'Viento',
+    element: 'Agua',
     status: 'Activo',
     seiyuu: 'Tomokazu Seki',
     description: 'Agresivo, brusco y cubierto de cicatrices. Sanemi posee una sangre especial sumamente rara (Marechi) que emborracha a los demonios que la huelen. Su estilo de combate con el viento es destructivo y violento.',
@@ -397,5 +397,27 @@ export const CHARACTERS: Character[] = [
       inteligencia: 81
     },
     themeColor: '#ff0033'
+  },
+  {
+    id: 'muzan-kibutsuji',
+    name: 'Muzan Kibutsuji',
+    japaneseName: '鬼舞辻 無慘',
+    role: 'luna',
+    subRole: 'Rey de los Demonios',
+    abilityType: 'Técnica de Sangre',
+    abilityName: 'Técnica de Sangre Suprema: Metamorfosis Demoníaca',
+    element: 'Transformación',
+    status: 'Activo',
+    seiyuu: 'Terashima Takuma',
+    description: 'El progenitor de todos los demonios y ser inmortal que ha caminado la tierra por más de mil años. Posee el poder de transformar su cuerpo de formas casi ilimitadas y distribuye autoridad absoluta sobre sus demonios a través del sistema de la Sangre Demoníaca.',
+    quote: 'Quiero vivir... Quiero conseguir más poder... Necesito consumir a Tanjiro y obtener la Respiración Solar para conquistar el sol.',
+    stats: {
+      fuerza: 100,
+      velocidad: 99,
+      tecnica: 99,
+      resistencia: 100,
+      inteligencia: 98
+    },
+    themeColor: '#a000ff'
   }
 ];
